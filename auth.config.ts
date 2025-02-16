@@ -1,5 +1,5 @@
 import type { NextAuthConfig } from 'next-auth';
- 
+
 export const authConfig = {
   pages: {
     signIn: '/login',
@@ -7,15 +7,19 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
+      const protectedRoutes = ['/products/add-craft', '/products/my-craft', '/products/my-profile'];
+      const isProtected = protectedRoutes.some((route) => nextUrl.pathname.startsWith(route));
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-      if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl));
+      const isOnLoginPage = nextUrl.pathname === '/login';
+
+      // Si la ruta es protegida, validar autenticación
+      if (isProtected || isOnDashboard) {
+        return isLoggedIn ? true : false; // Solo deja pasar si está autenticado
       }
+
+      // Permitir acceso a cualquier otra página sin restricciones
       return true;
     },
   },
-  providers: [], // Add providers with an empty array for now
+  providers: [],
 } satisfies NextAuthConfig;

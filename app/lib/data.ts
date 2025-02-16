@@ -6,6 +6,7 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
+  UserInfo
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -164,6 +165,26 @@ export async function fetchInvoiceById(id: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoice.');
+  }
+}
+
+export async function getUserInfo(id: string) {
+  try {
+    const userdata = await sql<UserInfo[]>`
+      SELECT
+        id,
+        name,
+        email,
+        last_name, 
+        favorite_artists
+      FROM users
+      WHERE id = ${id}
+    `;
+
+    return userdata[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch user info.');
   }
 }
 
