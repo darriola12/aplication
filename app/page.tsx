@@ -13,7 +13,7 @@ export default function Page() {
       }}
     >
       {/* Header Section */}
-      <div className="flex items-center justify-between p-6">
+      {/* <div className="flex items-center justify-between p-6">
         <AcmeLogo />
         <Link
           href="/signup"
@@ -21,7 +21,7 @@ export default function Page() {
         >
           <span>Sign Up</span> <ArrowRightIcon className="w-5 md:w-6" />
         </Link>
-      </div>
+      </div> */}
 
       {/* Welcome Message Section */}
       <div className="flex-1 p-6">
