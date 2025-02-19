@@ -5,6 +5,8 @@ import { z } from 'zod';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import postgres from 'postgres';
+import { Session } from "next-auth";
+
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -42,25 +44,15 @@ export const { auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    // Callback para el JWT: agrega el id del usuario al token
     async jwt({ token, user }) {
-      if (user?.id) {
-        token.id = user.id;
+      if (user) {
+        // Agregar datos al token
+        token.id = user.id; // Asegúrate de que el 'user.id' existe
+        console.log("JWT Token ID:", token.id); // Imprimir el ID del token
+      
       }
       return token;
     },
-
-    // Callback para la sesión: agrega el id del token a la sesión
-    async session({ session, token }) {
-      if (token?.id) {
-        session.user.id = token.id as string; // Asegúrate de que es un string
-      }
-      return session;
-    },
-  },
-  // Asegúrate de que el tipo de la sesión se ajuste al tipo de usuario
-  session: {
-    strategy: 'jwt', // Usar JWT para la sesión
-  },
+   
+  }
 });
-  

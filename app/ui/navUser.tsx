@@ -1,22 +1,14 @@
 'use client';
-import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+
+
+import { getToken } from 'next-auth/jwt';
+
+
 
 export default function NavUser() {
-    // const { data: session, status } = useSession();
+    
 
-    // // Verifica el estado de la sesión en consola
-    // console.log('Session:', session);
-    // console.log('Status:', status);
-
-    // if (status === 'loading') {
-    //     return <div>Loading...</div>;
-    // }
-
-    // if (!session || !session.user) {
-    //     return <div>You are not logged in.</div>;
-    // }
-
-    // const userId = session.user.id;
 
     return (
         <div className="bg-white shadow-md py-4">
