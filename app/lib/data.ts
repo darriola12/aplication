@@ -237,3 +237,24 @@ export async function fetchFilteredCustomers(query: string) {
     throw new Error('Failed to fetch customer table.');
   }
 }
+
+export async function fetchSellerInfo(sellerId: string) {
+  try {
+    const sellerData = await sql<{ name: string; email: string }[]>`
+      SELECT
+        name,
+        email
+      FROM sellers
+      WHERE id = ${sellerId}
+    `;
+
+    if (sellerData.length === 0) {
+      throw new Error("Seller not found");
+    }
+
+    return sellerData[0];
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch seller information.");
+  }
+}
