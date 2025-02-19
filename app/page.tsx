@@ -12,18 +12,7 @@ export default function Page() {
           "url('https://cdn.pixabay.com/photo/2018/03/16/00/11/wicker-3229896_1280.jpg')",
       }}
     >
-      {/* Header Section */}
-      {/* <div className="flex items-center justify-between p-6">
-        <AcmeLogo />
-        <Link
-          href="/signup"
-          className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-        >
-          <span>Sign Up</span> <ArrowRightIcon className="w-5 md:w-6" />
-        </Link>
-      </div> */}
-
-      {/* Welcome Message Section */}
+   
       <div className="flex-1 p-6">
         <div
           className="flex flex-col items-center justify-center text-center p-8 mb-10 rounded-lg"
@@ -106,7 +95,7 @@ export default function Page() {
                 className="rounded-lg"
               />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900">Sarah Johnson</h3>
+            <h3 className="text-xl font-semibold text-gray-900">Johnson Lee</h3>
             <p className="text-gray-600">Born: 1985</p>
             <p className="text-gray-700">Specialty: Handcrafted Pottery</p>
           </div>
@@ -115,7 +104,7 @@ export default function Page() {
           <div className="rounded-lg bg-gray-100 p-6 shadow-lg">
             <div className="relative h-48 w-full mb-4">
               <Image
-                src="/path-to-michael-lee.jpg" // Replace with actual image path
+                src="https://media.istockphoto.com/id/602329154/photo/painter-holding-a-paintbrush-and-a-color-palette.jpg?s=612x612&w=0&k=20&c=S64REnuxAK0WDUxa8lmubq-ne08HXSNSAI6A5X8OYHs=" // Replace with actual image path
                 alt="Michael Lee"
                 layout="fill"
                 objectFit="cover"
@@ -131,7 +120,7 @@ export default function Page() {
           <div className="rounded-lg bg-gray-100 p-6 shadow-lg">
             <div className="relative h-48 w-full mb-4">
               <Image
-                src="/path-to-elena-martinez.jpg" // Replace with actual image path
+                src="https://media.istockphoto.com/id/602329154/photo/painter-holding-a-paintbrush-and-a-color-palette.jpg?s=612x612&w=0&k=20&c=S64REnuxAK0WDUxa8lmubq-ne08HXSNSAI6A5X8OYHs=" // Replace with actual image path
                 alt="Elena Martínez"
                 layout="fill"
                 objectFit="cover"
@@ -147,7 +136,7 @@ export default function Page() {
           <div className="rounded-lg bg-gray-100 p-6 shadow-lg">
             <div className="relative h-48 w-full mb-4">
               <Image
-                src="/path-to-david-wong.jpg" // Replace with actual image path
+                src="https://media.istockphoto.com/id/536010979/photo/artist.jpg?s=612x612&w=0&k=20&c=aGyajXa8PwTkMTsS393vKp6u2Qk7iC0jCjxOW5djz8M=" // Replace with actual image path
                 alt="David Wong"
                 layout="fill"
                 objectFit="cover"

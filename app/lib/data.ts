@@ -74,35 +74,23 @@ export async function getCraftRandom() {
   }
 }
 
-export async function getMyCraft(id: string) {
+export async function fetchSellerInfo(sellerId: string) {
   try {
-    // Ejecutar la consulta SQL para obtener crafts aleatorios
-    const craftData = await sql<Craft[]>`
-      SELECT 
-        user_collection.craft_name, 
-        user_collection.description, 
-        user_collection.category, 
-        user_collection.price, 
-        user_collection.img
-      FROM user_collection
-      WHERE user_id = ${id}
-      
+    const sellerData = await sql<{ name: string; email: string }[]>`
+      SELECT
+        name,
+        email
+      FROM sellers
+      WHERE id = ${sellerId}
     `;
 
-    // Mapear los resultados para devolverlos en el formato deseado
-    const crafts = craftData.map((craft) => ({
-      craft_name: craft.craft_name,
-      description: craft.description,
-      category: craft.category,
-      price: craft.price,
-      img: craft.img,
-    }));
+    if (sellerData.length === 0) {
+      throw new Error("Seller not found");
+    }
 
-    return crafts;
+    return sellerData[0];
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch random crafts.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch seller information.");
   }
 }
-
-
