@@ -21,7 +21,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
       <div className="flex flex-col">
         <label htmlFor="name" className="text-lg font-medium text-gray-600">Name</label>
         <div className="mt-2 px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-700">
-          {userdata.last_name}
+          {userdata.name}
         </div>
       </div>
 

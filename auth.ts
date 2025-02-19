@@ -63,3 +63,4 @@ export const { auth, signIn, signOut } = NextAuth({
     strategy: 'jwt', // Usar JWT para la sesión
   },
 });
+  

@@ -1,10 +1,14 @@
-import { getCraftRandom } from '@/app/lib/data';
+import { getMyCraft} from '@/app/lib/data';
 import NavUser from "@/app/ui/navUser";
 // Asegúrate de importar tu componente de navegación
 
-export default async function Product() {
-  // Obtenemos los crafts de forma asíncrona
-  const crafts = await getCraftRandom();
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
+    const id = params.id;
+    const [crafts] = await Promise.all([
+        getMyCraft(id),
+      ]);
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-gray-50 to-gray-100">
@@ -13,7 +17,7 @@ export default async function Product() {
       <div className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-5xl font-bold text-center text-gray-900 mb-12">
-            Our Products
+            My Products
           </h1>
 
           {/* Grid para mostrar los crafts */}
@@ -37,9 +41,6 @@ export default async function Product() {
       </p>
       <p className="text-gray-800 mt-2 font-semibold">
         Price: ${craft.price}
-      </p>
-      <p className="text-gray-600 mt-2">
-        By: {craft.user.name} {craft.user.last_name} - {craft.user.email}
       </p>
       <button className="mt-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-300">
         View Details

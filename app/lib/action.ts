@@ -23,9 +23,39 @@ const UserSchema = z.object({
     favorteArtist: z.string(),
 
 });
+
+const CraftSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(), 
+  category: z.string(),
+  price: z.number(),
+  img: z.string(),
+  user_id: z.string(),
+});
  
 const CreateUser =  UserSchema.omit({ id: true });
+const CreateCraft = CraftSchema.omit({ id: true });
 
+
+export async function createCraft(formData: FormData) {
+  const { name, description, category, price, img,user_id} = CreateCraft.parse({ 
+    name: formData.get('name'),
+    description: formData.get('description'),
+    category: formData.get('category'),
+    price: Number(formData.get('price')),
+    img: formData.get('img'),
+    user_id: formData.get('user_id'),
+  });
+   
+  await sql`
+    INSERT INTO user_collection (craft_name, description, category, price, img, user_id)
+    VALUES (${name}, ${description}, ${category}, ${price}, ${img}, ${user_id})
+  `;
+
+  revalidatePath('/products');
+  redirect('/products');
+}
 
 
 export async function createUser(formData: FormData) {
@@ -48,10 +78,6 @@ export async function createUser(formData: FormData) {
   redirect('/login');
 }
 
-
- 
-
- 
 
  
 export async function authenticate(

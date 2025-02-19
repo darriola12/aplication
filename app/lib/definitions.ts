@@ -95,4 +95,16 @@ export type InvoiceForm = {
   status: 'pending' | 'paid';
 };
 
+export type Craft = {
+  craft_name: string;
+  description: string;
+  category: string;
+  price: number;
+  img: string;
+  name: string;
+  last_name: string;
+  email: string;
+};
+
+
 
