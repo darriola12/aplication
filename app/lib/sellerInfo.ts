@@ -6,7 +6,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 export async function fetchUsers() {
   try {
     const users = await sql`
-      SELECT id, name, last_name, email
+      SELECT id, name, last_name, email, img
       FROM users
       ORDER BY name ASC
     `;
