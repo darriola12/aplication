@@ -13,13 +13,6 @@ import bcrypt from 'bcrypt';
  
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
  
-const FormSchema = z.object({
-  id: z.string(),
-  customerId: z.string(),
-  amount: z.coerce.number(),
-  status: z.enum(['pending', 'paid']),
-  date: z.string(),
-});
 
 const UserSchema = z.object({
     id: z.string(),
@@ -30,10 +23,39 @@ const UserSchema = z.object({
     favorteArtist: z.string(),
 
 });
- 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
-const CreateUser =  UserSchema.omit({ id: true });
 
+const CraftSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(), 
+  category: z.string(),
+  price: z.number(),
+  img: z.string(),
+  user_id: z.string(),
+});
+ 
+const CreateUser =  UserSchema.omit({ id: true });
+const CreateCraft = CraftSchema.omit({ id: true });
+
+
+export async function createCraft(formData: FormData) {
+  const { name, description, category, price, img,user_id} = CreateCraft.parse({ 
+    name: formData.get('name'),
+    description: formData.get('description'),
+    category: formData.get('category'),
+    price: Number(formData.get('price')),
+    img: formData.get('img'),
+    user_id: formData.get('user_id'),
+  });
+   
+  await sql`
+    INSERT INTO user_collection (craft_name, description, category, price, img, user_id)
+    VALUES (${name}, ${description}, ${category}, ${price}, ${img}, ${user_id})
+  `;
+
+  revalidatePath('/products');
+  redirect('/products');
+}
 
 
 export async function createUser(formData: FormData) {
@@ -57,54 +79,6 @@ export async function createUser(formData: FormData) {
 }
 
 
- 
-export async function createInvoice(formData: FormData) {
-    const { customerId, amount, status } = CreateInvoice.parse({
-      customerId: formData.get('customerId'),
-      amount: formData.get('amount'),
-      status: formData.get('status'),
-    });
-    const amountInCents = amount * 100;
-    const date = new Date().toISOString().split('T')[0];
-    await sql`
-    INSERT INTO invoices (customer_id, amount, status, date)
-    VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-    
-  `;
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
-  }
-
-// Use Zod to update the expected types
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
- 
-// ...
- 
-export async function updateInvoice(id: string, formData: FormData) {
-  const { customerId, amount, status } = UpdateInvoice.parse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
-  });
- 
-  const amountInCents = amount * 100;
- 
-  await sql`
-    UPDATE invoices
-    SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
-    WHERE id = ${id}
-  `;
- 
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
-}
-
-export async function deleteInvoice(id: string) {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
-  }
-
-// ...
  
 export async function authenticate(
   prevState: string | undefined,
