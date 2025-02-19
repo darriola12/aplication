@@ -1,5 +1,7 @@
 import { getCraftRandom } from '@/app/lib/data';
 import NavUser from "@/app/ui/navUser";
+import Link from "next/link";
+
 // Asegúrate de importar tu componente de navegación
 
 export default async function Product() {
@@ -41,9 +43,12 @@ export default async function Product() {
       <p className="text-gray-600 mt-2">
         By: {craft.user.name} {craft.user.last_name} - {craft.user.email}
       </p>
-      <button className="mt-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-300">
+      <Link
+       href={`/products/view-details/${craft.id}`}
+        className="mt-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 flex justify-center"
+      >
         View Details
-      </button>
+      </Link>
     </div>
   ))}
 </div>

@@ -44,6 +44,7 @@ export async function getCraftRandom() {
         user_collection.category, 
         user_collection.price, 
         user_collection.img,
+        user_collection.id,
         users.name, 
         users.last_name, 
         users.email
@@ -60,6 +61,7 @@ export async function getCraftRandom() {
       category: craft.category,
       price: craft.price,
       img: craft.img,
+      id: craft.id,
       user: {
         name: craft.name,
         last_name: craft.last_name,
@@ -93,4 +95,30 @@ export async function fetchSellerInfo(sellerId: string) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch seller information.");
   }
+}
+
+export async function getCraftspecific(id:string) {
+  try {
+    // Ejecutar la consulta SQL para obtener crafts aleatorios
+    const craftData = await sql<Craft[]>`
+      SELECT 
+        user_collection.craft_name, 
+        user_collection.description, 
+        user_collection.category, 
+        user_collection.price, 
+        user_collection.img,
+        users.name, 
+        users.last_name, 
+        users.email
+      FROM user_collection
+      LEFT JOIN users ON users.id = user_collection.user_id
+      WHERE user_collection.id = ${id}
+    `;
+    
+
+    return craftData[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch random crafts.');
+  } 
 }

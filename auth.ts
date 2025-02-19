@@ -56,8 +56,3 @@ export const { auth, signIn, signOut } = NextAuth({
    
   }
 });
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 372355894b9d04336b81d4b6086ad97d04030044
