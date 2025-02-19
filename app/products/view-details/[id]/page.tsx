@@ -14,15 +14,15 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                 {/* Imagen grande */}
-                {/* <div className="w-full md:w-1/2">
+                <div className="w-full md:w-1/2">
                     <Image 
-                        src={craftData.img} 
+                        src= "/customers/product.jpeg"
                         alt={craftData.craft_name} 
                         width={500} 
                         height={500} 
                         className="rounded-lg object-cover w-full h-auto"
                     />
-                </div> */}
+                </div>
                 {/* Detalles del producto */}
                 <div className="w-full md:w-1/2">
                     <h2 className="text-3xl font-bold text-gray-800">{craftData.craft_name}</h2>
