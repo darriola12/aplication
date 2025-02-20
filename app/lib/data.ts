@@ -122,3 +122,34 @@ export async function getCraftspecific(id:string) {
     throw new Error('Failed to fetch random crafts.');
   } 
 }
+
+export async function getMyCraft(id: string) {
+  try {
+    // Ejecutar la consulta SQL para obtener crafts aleatorios
+    const craftData = await sql<Craft[]>`
+      SELECT 
+        user_collection.craft_name, 
+        user_collection.description, 
+        user_collection.category, 
+        user_collection.price, 
+        user_collection.img
+      FROM user_collection
+      WHERE user_id = ${id}
+      
+    `;
+
+    // Mapear los resultados para devolverlos en el formato deseado
+    const crafts = craftData.map((craft) => ({
+      craft_name: craft.craft_name,
+      description: craft.description,
+      category: craft.category,
+      price: craft.price,
+      img: craft.img,
+    }));
+
+    return crafts;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch random crafts.');
+  }
+}

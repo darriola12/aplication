@@ -16,7 +16,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
                 {/* Imagen grande */}
                 <div className="w-full md:w-1/2">
                     <Image 
-                        src= "/customers/product.jpeg"
+                        src= {craftData.img}
                         alt={craftData.craft_name} 
                         width={500} 
                         height={500} 
@@ -35,6 +35,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
                         <p className="text-gray-600">{craftData.email}</p>
                     </div>
                 </div>
+                
             </div>
         </div>
     );
