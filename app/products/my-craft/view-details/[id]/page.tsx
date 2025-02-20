@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import {getCraftspecific} from 'app/lib/data';
+import {getCraftspecific, getComments} from 'app/lib/data';
 import CommentForm from '@/app/ui/commentForm';
+import { get } from 'http';
 
 
 
@@ -8,14 +9,17 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const id = params.id;
     const [craftData] = await Promise.all([
-           getCraftspecific(id),
+           getCraftspecific(id), getComments(id)
           ]);
+    const [commentsdata] = await Promise.all([
+      getComments(id)
+     ]);
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                 {/* Imagen grande */}
-                <div className="w-full md:w-1/2">
+                {/* <div className="w-full md:w-1/2">
                     <Image 
                         src= {craftData.img}
                         alt={craftData.craft_name} 
@@ -23,7 +27,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
                         height={500} 
                         className="rounded-lg object-cover w-full h-auto"
                     />
-                </div>
+                </div> */}
                 {/* Detalles del producto */}
                 <div className="w-full md:w-1/2">
                     <h2 className="text-3xl font-bold text-gray-800">{craftData.craft_name}</h2>
@@ -36,7 +40,18 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
                         <p className="text-gray-600">{craftData.email}</p>
                     </div>
                 </div>
-                <CommentForm id={id} />
+                <div>
+                    <h3 className="text-lg font-semibold text-gray-700">Comments</h3>
+                    <ul className="space-y-2 mt-4">
+                        {commentsdata.map((comment, index) => (
+                            <li key={index} className="bg-gray-100 p-4 rounded-lg">
+                                <p className="text-gray-800">{comment.comment}</p>
+                            </li>
+                        ))}
+                        
+                    </ul>
+                </div>
+
                 
             </div>
         </div>

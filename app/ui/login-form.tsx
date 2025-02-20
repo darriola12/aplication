@@ -16,7 +16,7 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
 
   // Use callback URL from query parameters or default to '/sellers'
-  const callbackUrl = searchParams.get('callbackUrl') || '/sellers';
+  const callbackUrl = searchParams.get('callbackUrl') || '/products';
 
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,

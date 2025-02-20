@@ -42,4 +42,24 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        // Guardar el id del usuario en el token
+        token.id = user.id;
+        console.log('User id:', user.id);
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+      console.log('Session callback token:', token); // Verifica si el token tiene el id
+      if (token) {
+        session.user.id = token.id as string;
+        console.log('Session user id:', session.user.id); // Verifica si el id está siendo asignado correctamente
+      }
+      return session;
+    }
+  },
 });
+

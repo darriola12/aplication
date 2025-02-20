@@ -12,6 +12,21 @@ import {
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
+export async function getComments(id: string) {
+  try { 
+    const commentsdata = await sql<UserInfo[]>`
+      SELECT comment, id
+      FROM comments
+      WHERE user_collection_id = ${id}
+    `;
+
+    return commentsdata;  // Devolver directamente el arreglo de comentarios
+  } catch (error) {   
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch comments.');
+  }
+}
+
 
 export async function getUserInfo(id: string) {
   try {
@@ -132,7 +147,8 @@ export async function getMyCraft(id: string) {
         user_collection.description, 
         user_collection.category, 
         user_collection.price, 
-        user_collection.img
+        user_collection.img,
+        user_collection.id
       FROM user_collection
       WHERE user_id = ${id}
       
@@ -145,6 +161,7 @@ export async function getMyCraft(id: string) {
       category: craft.category,
       price: craft.price,
       img: craft.img,
+      id: craft.id,
     }));
 
     return crafts;

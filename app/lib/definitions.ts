@@ -62,6 +62,7 @@ export type UserInfo = {
   email: string;
   last_name: string;
   favorite_artists: string; 
+  comment: string;
 };
 
 export type CustomersTableType = {
@@ -108,5 +109,8 @@ export type Craft = {
   id: string;
 };
 
-
+export type CommentData = {
+  commentdata: string;
+  id: string;
+};  
 

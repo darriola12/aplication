@@ -36,10 +36,29 @@ const CraftSchema = z.object({
   img: z.string(),
   user_id: z.string(),
 });
+
+const CommentSchema = z.object({
+  id: z.string(), 
+  comment: z.string(),
+});
+
+
  
 const CreateUser =  UserSchema.omit({ id: true });
 const CreateCraft = CraftSchema.omit({ id: true });
 
+export async function createComment(formData: FormData) {
+  const { id, comment } = CommentSchema.parse({ 
+    id: formData.get('id'),
+    comment: formData.get('comment'),
+  });
+  await sql`
+    INSERT INTO comments (comment, user_collection_id)
+    VALUES (${comment}, ${id})
+  `;
+  revalidatePath(`/products/view-details/${id}`);
+  redirect(`/products/view-details/${id}`);  
+}
 
 export async function createCraft(formData: FormData) {
   const { name, description, category, price, img,user_id} = CreateCraft.parse({ 
