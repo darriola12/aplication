@@ -1,12 +1,10 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { authConfig } from './auth.config';
-import { z } from 'zod';
-import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import postgres from 'postgres';
-import { Session } from "next-auth";
-
+import { z } from 'zod';
+import type { User } from '@/app/lib/definitions';
+import { authConfig } from './auth.config';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -31,10 +29,11 @@ export const { auth, signIn, signOut } = NextAuth({
 
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
+
           const user = await getUser(email);
           if (!user) return null;
-          const passwordsMatch = await bcrypt.compare(password, user.password);
 
+          const passwordsMatch = await bcrypt.compare(password, user.password);
           if (passwordsMatch) return user;
         }
 
@@ -43,16 +42,4 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        // Agregar datos al token
-        token.id = user.id; // Asegúrate de que el 'user.id' existe
-        console.log("JWT Token ID:", token.id); // Imprimir el ID del token
-      
-      }
-      return token;
-    },
-   
-  }
 });
