@@ -8,22 +8,24 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
 
-      // Definir rutas protegidas
+      // Definir rutas protegidas específicas
       const protectedRoutes = [
         '/products/add-craft',
         '/products/my-craft',
         '/products/my-profile',
       ];
 
+      // Verifica si la ruta es exactamente /products o si es una de las protegidas
       const isProtected = protectedRoutes.some((route) =>
         nextUrl.pathname.startsWith(route)
       );
 
-      const isOnProducts = nextUrl.pathname.startsWith('/products'); // Protege todo /products
+      // Protege todas las rutas que siguen a /products/ pero no /products
+      const isOnProtectedProductPage = /^\/products\/.+/.test(nextUrl.pathname);
       const isOnLoginPage = nextUrl.pathname === '/login';
 
-      // Si está en una ruta protegida o en productos, verificar autenticación
-      if (isProtected || isOnProducts) {
+      // Si la ruta es protegida o está en products/..., verificar autenticación
+      if (isProtected || isOnProtectedProductPage) {
         if (!isLoggedIn) {
           return Response.redirect(new URL('/login', nextUrl.origin)); // Redirigir a login si no está autenticado
         }

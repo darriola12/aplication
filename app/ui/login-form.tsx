@@ -1,5 +1,5 @@
 'use client';
- 
+import Link from 'next/link';
 import { lusitana } from '@/app/ui/fonts';
 import {
   AtSymbolIcon,
@@ -74,11 +74,19 @@ export default function LoginForm() {
         <Button className="mt-4 w-full" aria-disabled={isPending}>
           Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
+        <Link
+           href="/signup"
+            className="mt-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 flex justify-center"
+          >
+            Create an account
+      </Link>
         <div
+        
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
           aria-atomic="true"
         >
+
           {errorMessage && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />

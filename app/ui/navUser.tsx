@@ -8,9 +8,9 @@ export default function NavUser() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6">
           <h1 className="text-xl font-bold">My Handcrafted App</h1>
           <div className="flex items-center space-x-6">
-            <a href="/products/add-craft" className="text-gray-600 hover:text-gray-900">Add Craft</a>
-            <a href="/products/my-craft" className="text-gray-600 hover:text-gray-900">My Craft</a>
-            <a href="/products/my-profile/" className="text-gray-600 hover:text-gray-900">My Profile</a>
+            <a href="/products/add-craft/893eb626-1abe-4ff3-8286-572221b3773f" className="text-gray-600 hover:text-gray-900">Add Craft</a>
+            <a href="/products/my-craft/proyects/893eb626-1abe-4ff3-8286-572221b3773f" className="text-gray-600 hover:text-gray-900">My Craft</a>
+            <a href="/products/my-profile/893eb626-1abe-4ff3-8286-572221b3773f" className="text-gray-600 hover:text-gray-900">My Profile</a>
             <form
               action={async () => {
                 'use server';
